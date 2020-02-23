@@ -1,0 +1,507 @@
+{
+	"info": {
+		"_postman_id": "80e0fdb9-33f6-40f4-9773-62922b8440b2",
+		"name": "NewManCollection1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Creating a Repository",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "64c3983f-d102-4c8e-86c0-4930ca7ed0c7",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.environment.set(\"repositoryName\", pm.response.json().name);",
+							"console.log(pm.response.json().name)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "Siemensa15",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "chakaravarthy1989@gmail.com",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Postman Repo2\",\r\n  \"description\": \"This is your first repository for Postman Testing\",\r\n  \"homepage\": \"https://github.com\",\r\n  \"private\": false,\r\n  \"has_issues\": true,\r\n  \"has_projects\": true,\r\n  \"has_wiki\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.github.com/user/repos",
+					"protocol": "https",
+					"host": [
+						"api",
+						"github",
+						"com"
+					],
+					"path": [
+						"user",
+						"repos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Searching Newly Created Repository",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "64c3983f-d102-4c8e-86c0-4930ca7ed0c7",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Verify the Newly created Repository Name\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.name).to.eql(pm.environment.get(\"repositoryName\"));",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "Siemensa15",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "chakaravarthy1989@gmail.com",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.github.com/repos/:owner/:repo",
+					"protocol": "https",
+					"host": [
+						"api",
+						"github",
+						"com"
+					],
+					"path": [
+						"repos",
+						":owner",
+						":repo"
+					],
+					"variable": [
+						{
+							"key": "owner",
+							"value": "sibi1989"
+						},
+						{
+							"key": "repo",
+							"value": "Postman-Repo2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Creating an issue in Repository",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "64c3983f-d102-4c8e-86c0-4930ca7ed0c7",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.environment.set(\"issueTitle\", pm.response.json().title);",
+							"",
+							"pm.environment.set(\"issueNumber\", pm.response.json().number);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "Siemensa15",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "chakaravarthy1989@gmail.com",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"Found a bug\",\r\n  \"body\": \"This issue has been automatically created by Postman.\",\r\n  \"assignees\": [\r\n    \"Sibi1989\"\r\n  ]\r\n}\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.github.com/repos/:owner/:repo/issues",
+					"protocol": "https",
+					"host": [
+						"api",
+						"github",
+						"com"
+					],
+					"path": [
+						"repos",
+						":owner",
+						":repo",
+						"issues"
+					],
+					"variable": [
+						{
+							"key": "owner",
+							"value": "Sibi1989"
+						},
+						{
+							"key": "repo",
+							"value": "Postman-Repo2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Searching for an Issue",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "64c3983f-d102-4c8e-86c0-4930ca7ed0c7",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"console.log(pm.response.json());",
+							"",
+							"pm.test(\"Verify the Title of the issue as 'Found a bug'\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.title).to.eql(pm.environment.get(\"issueTitle\"));",
+							"});",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "Siemensa15",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "chakaravarthy1989@gmail.com",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.github.com/repos/:owner/:repo/issues/:issue_number",
+					"protocol": "https",
+					"host": [
+						"api",
+						"github",
+						"com"
+					],
+					"path": [
+						"repos",
+						":owner",
+						":repo",
+						"issues",
+						":issue_number"
+					],
+					"variable": [
+						{
+							"key": "owner",
+							"value": "sibi1989"
+						},
+						{
+							"key": "repo",
+							"value": "Postman-Repo2"
+						},
+						{
+							"key": "issue_number",
+							"value": "{{issueNumber}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a Repository",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "64c3983f-d102-4c8e-86c0-4930ca7ed0c7",
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "Siemensa15",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "chakaravarthy1989@gmail.com",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.github.com/repos/:owner/:repo",
+					"protocol": "https",
+					"host": [
+						"api",
+						"github",
+						"com"
+					],
+					"path": [
+						"repos",
+						":owner",
+						":repo"
+					],
+					"variable": [
+						{
+							"key": "owner",
+							"value": "sibi1989"
+						},
+						{
+							"key": "repo",
+							"value": "{{repositoryName}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Searching fro deleted Repository",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "64c3983f-d102-4c8e-86c0-4930ca7ed0c7",
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"pm.environment.unset(\"repositoryName\");",
+							"pm.environment.unset(\"issueNumber\");",
+							"pm.environment.unset(\"issueTitle\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "Siemensa15",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "chakaravarthy1989@gmail.com",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.github.com/repos/:owner/:repo",
+					"protocol": "https",
+					"host": [
+						"api",
+						"github",
+						"com"
+					],
+					"path": [
+						"repos",
+						":owner",
+						":repo"
+					],
+					"variable": [
+						{
+							"key": "owner",
+							"value": "sibi1989"
+						},
+						{
+							"key": "repo",
+							"value": "{{repositoryName}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
